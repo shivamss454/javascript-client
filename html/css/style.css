@@ -7,7 +7,7 @@
     flex-direction: column;
     box-sizing:border-box;
     border: 1px solid rgb(250, 243, 243); 
-    box-shadow: 15px 15px 5px rgba(160, 128, 128, 0.26);
+    box-shadow: 10px 5px 5px #cac2c2;
 }
 .group1{
     width: 98%;
@@ -33,7 +33,7 @@
 .thirddiv{
     width:40%;
     padding: 1%;
-    background: rgba(219, 215, 215, 0.856);
+    background: #eae6e6;
 }
 .fa {
 position: absolute;
