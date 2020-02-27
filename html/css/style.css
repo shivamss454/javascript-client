@@ -1,0 +1,41 @@
+.container{
+    position: relative;
+    width:90%;
+    display: flex;
+    margin: 5%;
+   justify-content: center;
+    flex-direction: column;
+    box-sizing:border-box;
+    border: 1px solid rgb(250, 243, 243); 
+    box-shadow: 15px 15px 5px rgba(160, 128, 128, 0.26);
+}
+.group1{
+    width: 98%;
+    display:flex;
+    padding:1%;
+    border:1px solid  rgb(250, 243, 243);
+}
+.group2{
+    width: 100%;
+    height: auto;
+    display:flex;
+    flex-direction: row;
+    flex:2;
+    border:1px solid  rgb(250, 243, 243);
+}
+.g1second{
+    margin-left:10%;
+}
+.seconddiv{
+    width:60%;
+    padding:1%;
+}
+.thirddiv{
+    width:40%;
+    padding: 1%;
+    background: rgba(219, 215, 215, 0.856);
+}
+.fa {
+position: absolute;
+margin-left:96%
+}
