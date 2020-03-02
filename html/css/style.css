@@ -1,6 +1,8 @@
+body{
+    background-image: url(../images/background.jpg);
+}
 .container{
     position: relative;
-    width:90%;
     /* display: flex; */
     margin: 5%;
    /* justify-content: center;
@@ -8,6 +10,7 @@
     box-sizing:border-box;
    border: 1px solid rgba(250, 243, 243, 0.507);
     box-shadow: 10px 5px 5px #e4e4e4;
+    background-color: white;
 }
 .group1{
     width: 98%;
@@ -25,10 +28,10 @@
     margin-bottom:-1px;
 }
 .payment{
-    width:50%;
+   width:50%;
 }
 .cart{
-    width:40%;
+   width:40%;
     background :#f1f1f1;
 }
 .cartgroup{
@@ -47,7 +50,7 @@
 }
 .discover img{
    display: block;
-   padding: 1%;
+   padding: 4%;
    /* margin-bottom: 10px; */
    /* width: 100px; */
 }
@@ -85,11 +88,13 @@
 }
 .groupfield input{
    margin-top: 2%;
+   margin-bottom:2%;
    width:100%;
    padding: 2%;
 }
 .discover{
-    /* margin-left:2%; */
+   padding:1%;
+   border:5px solid #fff;
 }
 .discoverchild{
 position: relative;
@@ -122,8 +127,11 @@ position: relative;
   border: none;
   color: white;
 }
-.images .discover img:hover{
-   transform: scale(1.1);
+.images .discover:hover{
+   
+   background-color:  #e4e4e4;
+   border-radius: 4px;
+   border-color: #e4e4e4;
    /*transition: 2s ease-in-out;*/
 }
 .fa {
@@ -262,3 +270,67 @@ margin-left:96%
     padding:1% 0 2%;
     justify-content: space-between;
 }
+@media (min-width:992px){
+    .container{
+        margin:0 100px;
+    }
+}
+@media (max-width:992px){
+    .container{
+       margin:0 20px;
+    }
+}
+
+@media (min-width:992px){
+   .cart{
+       width:40%;
+   }
+  .payment{
+      width:60%;
+  }
+  
+}
+@media all and (max-width:992px) and (min-width:768px){
+    .cart{
+        width:50%;
+    }
+   .payment{
+       width:50%;
+   }
+   @media all and (max-width:767) and (min-width:601){
+    .groupfield{
+        margin-left:26%;
+    }
+   }
+   
+ }
+ @media (max-width: 600px){
+    .group2{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .cart{
+        width:100%;
+    }
+   .payment{
+       width:97%;
+   }
+   
+ }
+ @media (max-width: 400px){
+    .group2{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .payment{
+        width:100%;
+    }
+    .g1second{
+        display: none;
+    }
+    .images{
+        flex-direction: column;
+       }
+   
+ }
+ 
