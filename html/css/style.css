@@ -122,6 +122,10 @@ position: relative;
   border: none;
   color: white;
 }
+.images .discover img:hover{
+   transform: scale(1.1);
+   /*transition: 2s ease-in-out;*/
+}
 .fa {
 position: absolute;
 margin-left:96%
