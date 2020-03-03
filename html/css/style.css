@@ -91,6 +91,7 @@ body{
    margin-bottom:2%;
    width:100%;
    padding: 2%;
+   border: 1px solid grey;
 }
 .discover{
    padding:1%;
@@ -112,7 +113,7 @@ position: relative;
  font-size: 12px;
 }
 #t3{
-    width: 49.2%;
+    width: 48.4%;
 }
 #t4{
     width: 49.2%;
@@ -288,7 +289,9 @@ margin-left:96%
   .payment{
       width:60%;
   }
-  
+  #t3{
+      width:49.1%;
+  }
 }
 @media all and (max-width:992px) and (min-width:768px){
     .cart{
@@ -297,13 +300,20 @@ margin-left:96%
    .payment{
        width:50%;
    }
-   @media all and (max-width:767) and (min-width:601){
+   #t3{
+       width:48%;
+   }
+  
+   
+ }
+ @media all and (max-width:767px) and (min-width:601px){
     .groupfield{
         margin-left:26%;
     }
+    #t3{
+        width:48%;
+    }
    }
-   
- }
  @media (max-width: 600px){
     .group2{
         display: flex;
@@ -315,9 +325,17 @@ margin-left:96%
    .payment{
        width:97%;
    }
+   #t3{
+    width:48.5%;
+}
    
  }
- @media (max-width: 400px){
+ @media all and(max-width:553px) and (min-width:401px){
+    #t3{
+        width:49%;
+    }
+ }
+ @media (max-width: 400px)and (min-width:251px){
     .group2{
         display: flex;
         flex-direction: column-reverse;
@@ -331,6 +349,14 @@ margin-left:96%
     .images{
         flex-direction: column;
        }
+       #t3{
+        width:47%;
+    }
    
  }
- 
+ @media (max-width: 250px)and (min-width:50px){
+
+    #t3{
+        width:46%;
+    }
+ }
