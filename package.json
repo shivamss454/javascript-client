@@ -14,7 +14,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint":"eslint ./src",
+    "lint:fix": "npm run lint --fix",
+    "commit": "npx git-cz"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -32,6 +35,8 @@
     ]
   },
   "devDependencies": {
-    "eslint-config-airbnb": "^18.0.1"
+    "commitizen": "^4.0.3",
+    "eslint-config-airbnb": "^18.0.1",
+    "husky": "^4.2.3"
   }
 }
