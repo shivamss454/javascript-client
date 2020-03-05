@@ -1,1 +1,2 @@
-export {default as textfield} from './TextField';
+// eslint-disable-next-line import/named
+export { default as Textfield } from './TextField';
