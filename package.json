@@ -11,14 +11,48 @@
     "react-scripts": "3.4.0",
     "styled-components": "^5.0.1"
   },
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": [
+    "airbnb"
+  ],
+  "rules": {
+    "indent": [
+      2,
+      2
+    ],
+    "react/jsx-indent": [
+      "error",
+      2
+    ],
+    "import/prefer-default-export": "off"
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "jsx": true,
+      "classes": true
+    }
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test watch--all",
+    "test:c": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "lint": "eslint ./src",
     "lint:fix": "npm run lint --fix",
     "commit": "npx git-cz"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run test:c",
+      "pre-push": "npm run lint && npm run test:c"
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,6 +72,12 @@
   "devDependencies": {
     "commitizen": "^4.0.3",
     "eslint-config-airbnb": "^18.0.1",
-    "husky": "^4.2.3"
+    "eslint": "6.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "husky": "^4.2.3",
+    "npm-package-json-lint": "^4.6.0"
   }
 }
