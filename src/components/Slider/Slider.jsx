@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Image from './style';
 import { getRandomNumber, getNextRoundRobin } from '../../libs/utils/math';
-import { PUBLIC_IMAGE_FOLDER, DEFAULT_BANNER_IMAGE, total } from '../../configs/constants';
+import { DEFAULT_BANNER_IMAGE, total } from '../../configs/constants';
 
 
 class Slider extends React.Component {
@@ -47,7 +47,6 @@ class Slider extends React.Component {
       <>
         <div>
           <Image src={`${banner[current]}`} alt={altText} height={height} duration={duration} />
-          {console.log('yy', PUBLIC_IMAGE_FOLDER, banner[current])}
         </div>
       </>
     );
