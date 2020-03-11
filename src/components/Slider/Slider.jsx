@@ -1,45 +1,72 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import Image from './style';
+import { getRandomNumber, getNextRoundRobin } from '../../libs/utils/math';
+import { PUBLIC_IMAGE_FOLDER, DEFAULT_BANNER_IMAGE, total } from '../../configs/constants';
 
-// eslint-disable-next-line react/prefer-stateless-function
+
 class Slider extends React.Component {
-  // eslint-disable-next-line no-useless-constructor
   constructor(props) {
-    console.log('hiii', props);
+    // console.log('hiii', props);
     super(props);
     this.state = {
-      name: 'shivam',
-      course: 'mca',
+      current: -1,
     };
   }
 
-   renderstudent = () => {
-     const { name, course } = this.state;
-     return (
-       <>
-         <p>
-name:
-           {name}
-           {' '}
+  componentDidMount() {
+    const { random, duration } = this.props;
+    let { current } = this.state;
+    this.id = setInterval(() => {
+      if (random) {
+        current = getRandomNumber(total);
+      } else {
+        current = getNextRoundRobin(current, total);
+      }
+      this.setState({ current });
+    }, duration);
+  }
 
-         </p>
-         <p>
-course:
-           {course}
-         </p>
-       </>
-     );
-   }
+  componentWillUnmount() {
+    clearInterval(this.id);
+  }
 
-   render() {
-     // eslint-disable-next-line react/prop-types
-     const { name } = this.props;
-     return (
-       <div>
-         {this.renderstudent()}
-         <input type="text" value={name} />
-         <h1>class Component </h1>
-       </div>
-     );
-   }
+  render() {
+    const { current } = this.state;
+    const {
+      altText, height, duration, banner, defaultbanner,
+    } = this.props;
+    if (current === -1 || banner.length === 0) {
+      return (
+        <div>
+          <Image src={`${defaultbanner}`} alt={altText} height={height} duration={duration} />
+        </div>
+      );
+    }
+    return (
+      <>
+        <div>
+          <Image src={`${banner[current]}`} alt={altText} height={height} duration={duration} />
+          {console.log('yy', PUBLIC_IMAGE_FOLDER, banner[current])}
+        </div>
+      </>
+    );
+  }
 }
+Slider.propTypes = {
+  altText: PropTypes.string,
+  banner: PropTypes.arrayOf(PropTypes.string),
+  defaultbanner: PropTypes.string,
+  duration: PropTypes.number,
+  height: PropTypes.number,
+  random: PropTypes.bool,
+};
+Slider.defaultProps = {
+  altText: 'default banner',
+  banner: [],
+  defaultbanner: DEFAULT_BANNER_IMAGE,
+  duration: 2000,
+  height: 200,
+  random: false,
+};
 export default Slider;
