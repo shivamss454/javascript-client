@@ -9,7 +9,7 @@ const TextFieldDemo = () => (
     <Container>
       <div>
         <div>
-          <Slider alt="No Image" duration="2000" height="400" random banner={banner} />
+          <Slider altText="No Image" duration="2000" height="400" random banner={banner} />
         </div>
       </div>
       <h3>This is a disable Input</h3>
