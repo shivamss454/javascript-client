@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { Fragment } from 'react';
-import { Input } from './style';
+import { Input, Select } from './style';
 
 const Textfield = (props) => {
   const { onChange, value, error } = props;
@@ -16,14 +16,14 @@ const Textfield = (props) => {
 const SelectField = (props) => {
   const { options, defaultoptions, onChange } = props;
   return (
-    <select onChange={onChange}>
+    <Select onChange={onChange}>
       {defaultoptions && <option>{defaultoptions}</option>}
       {
         options && options.length && options.map(({ label, value }) => (
           <option key={label} value={value}>{label}</option>
         ))
       }
-    </select>
+    </Select>
   );
 };
 const RadioField = (props) => {

@@ -44,7 +44,7 @@ class InputDemo extends React.Component {
         <h3>Name</h3>
         <Textfield value={name} onChange={this.onChangedTextField} />
         <h3>Select the Game you play</h3>
-        <SelectField onChange={this.onChangedSelectField} defaultoptions="select" options={SelectOptions} />
+        <SelectField onChange={this.onChangedSelectField} defaultoptions="Select" options={SelectOptions} />
         {
           sports && (
             <>

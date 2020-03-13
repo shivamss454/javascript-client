@@ -7,7 +7,7 @@ background: transparent;
   padding:1%;
   border: 1px solid grey;
   color: black;
-  background: #D5E2E3;
+  background: white;
   margin-left:.5%;
 
   ${(props) => props.error && css`
@@ -17,10 +17,20 @@ ${(props) => props.bgcolor && css`
     background: white;
  `};
 `;
+const Select = styled.select`
+background: transparent;
+border-radius: 3px;
+width: 99%;
+padding: 1%;
+border: 1px solid grey;
+color: black;
+background: #D5D8DC;
+margin-left:.5%;
+`;
 
 const Container = styled.div`
   border: 1px solid black;
 
 `;
 
-export { Input, Container };
+export { Input, Container, Select };
