@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import React, { Fragment } from 'react';
-import { Input, Select } from './style';
+import React from 'react';
+import { Input } from './style';
 
-const Textfield = (props) => {
+export const Textfield = (props) => {
   const { onChange, value, error } = props;
   return (
     <>
@@ -13,34 +13,3 @@ const Textfield = (props) => {
 
   );
 };
-const SelectField = (props) => {
-  const { options, defaultoptions, onChange } = props;
-  return (
-    <Select onChange={onChange}>
-      {defaultoptions && <option>{defaultoptions}</option>}
-      {
-        options && options.length && options.map(({ label, value }) => (
-          <option key={label} value={value}>{label}</option>
-        ))
-      }
-    </Select>
-  );
-};
-const RadioField = (props) => {
-  const { options, onChange } = props;
-  return (
-    <>
-      {
-        options && options.length && options.map(({ label, value }) => (
-          <Fragment key={label}>
-            {' '}
-            <input type="radio" name="game" value={value} onChange={onChange} />
-            {label}
-            <br />
-          </Fragment>
-        ))
-      }
-    </>
-  );
-};
-export { Textfield, SelectField, RadioField };

@@ -1,7 +1,7 @@
-/* eslint-disable no-sequences */
-/* eslint-disable no-useless-constructor */
 import React from 'react';
-import { Textfield, SelectField, RadioField } from '../../components/TextField/TextField';
+import { Textfield } from '../../components/TextField/TextField';
+import { SelectField } from '../../components/SelectField/SelectField';
+import { RadioGroup } from '../../components/RadioGroup/RadioGroup';
 import { SelectOptions, RadioCricket, RadioFootball } from '../../configs/constants';
 
 class InputDemo extends React.Component {
@@ -25,7 +25,7 @@ class InputDemo extends React.Component {
     this.setState({ sports: e.target.value });
   };
 
-  onChangedRadioField = (e) => {
+  onChangedRadioGroup = (e) => {
     const { sports } = this.state;
     this.setState({ cricket: '', football: '' });
     this.setState({ [sports]: e.target.value });
@@ -46,10 +46,10 @@ class InputDemo extends React.Component {
         <h3>Select the Game you play</h3>
         <SelectField onChange={this.onChangedSelectField} defaultoptions="Select" options={SelectOptions} />
         {
-          sports && (
+          (sports === '') || (sports === 'Select') ? false : (
             <>
               <h3>What do You do</h3>
-              <RadioField onChange={this.onChangedRadioField} options={this.getRadioOptions()} />
+              <RadioGroup onChange={this.onChangedRadioGroup} options={this.getRadioOptions()} />
             </>
           )
         }
