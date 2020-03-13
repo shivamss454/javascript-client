@@ -7,7 +7,7 @@ background: transparent;
   padding:1%;
   border: 1px solid grey;
   color: black;
-  background: #D5E2E3;
+  background: white;
   margin-left:.5%;
 
   ${(props) => props.error && css`
@@ -23,4 +23,6 @@ const Container = styled.div`
 
 `;
 
-export { Input, Container };
+export {
+  Input, Container,
+};
