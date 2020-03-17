@@ -11,4 +11,7 @@ background: #D5D8DC;
 margin-left:.5%;
 margin-bottom: 1%;
 `;
-export default Select;
+const P = styled.p`
+color: red;
+`;
+export { Select, P };
