@@ -9,11 +9,31 @@ const Math = (props) => {
   switch (operator) {
   case '+': result = first + second;
     break;
-  case '-':
+  case '-': result = first - second;
+    break;
+  case '*': result = first * second;
+    break;
+  case '/': result = first / second;
+    break;
+  default: result = 'invalid operation';
+  }
+  if (children) {
+    return children(first, second, result);
   }
   return (
     <>
-
+      <p>
+        {' '}
+        {first}
+        {' '}
+        {operator}
+        {' '}
+        {second}
+        {' '}
+        =
+        {' '}
+        {result}
+      </p>
     </>
   );
 };
@@ -26,6 +46,6 @@ Math.propTypes = {
 };
 
 Math.defaultProps = {
-  operator: '+',
+  children: undefined,
 };
 export default Math;
