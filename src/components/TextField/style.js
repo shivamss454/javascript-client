@@ -12,17 +12,20 @@ background: transparent;
 
   ${(props) => props.error && css`
     border: 1px solid red;
+    color: red;
 `}
 ${(props) => props.bgcolor && css`
     background: white;
  `};
 `;
-
 const Container = styled.div`
   border: 1px solid black;
 
 `;
+const Para = styled.p`
+  color: red;
+`;
 
 export {
-  Input, Container,
+  Input, Container, Para,
 };
