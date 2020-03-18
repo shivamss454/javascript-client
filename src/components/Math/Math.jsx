@@ -5,7 +5,7 @@ const Math = (props) => {
   const {
     first, second, operator, children,
   } = props;
-  let { result } = props;
+  let result = 0;
   switch (operator) {
   case '+': result = first + second;
     break;
