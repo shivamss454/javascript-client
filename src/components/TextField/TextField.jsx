@@ -15,10 +15,7 @@ export const Textfield = (props) => {
 };
 Textfield.propTypes = {
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,
   onBlur: PropTypes.func.isRequired,
-};
-Textfield.defaultProps = {
-  value: 'shivam',
 };
