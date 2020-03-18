@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import P from './style';
+import Para from './style';
 
 export const RadioGroup = (props) => {
   const {
@@ -18,7 +18,7 @@ export const RadioGroup = (props) => {
           </Fragment>
         ))
       }
-      <P>{error}</P>
+      <Para>{error}</Para>
     </>
   );
 };

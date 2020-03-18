@@ -11,7 +11,7 @@ background: #D5D8DC;
 margin-left:.5%;
 margin-bottom: 1%;
 `;
-const P = styled.p`
+const Para = styled.p`
 color: red;
 `;
-export { Select, P };
+export { Select, Para };
