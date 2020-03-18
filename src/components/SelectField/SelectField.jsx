@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Select, P } from './style';
+import { Select, Para } from './style';
 
 export const SelectField = (props) => {
   const {
     options, defaultoptions, onChange, error, onBlur,
   } = props;
-  console.log('yyyy', error);
   return (
     <>
       <Select onChange={onChange} onBlur={onBlur} error>
@@ -17,7 +16,7 @@ export const SelectField = (props) => {
           ))
         }
       </Select>
-      <P>{error}</P>
+      <Para>{error}</Para>
     </>
   );
 };

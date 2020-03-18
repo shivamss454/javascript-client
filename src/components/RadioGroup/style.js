@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const P = styled.p`
+const Para = styled.p`
 color: red;
 `;
-export default P;
+export default Para;

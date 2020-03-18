@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Input, Para } from './style';
 
 export const Textfield = (props) => {
@@ -12,4 +12,10 @@ export const Textfield = (props) => {
       <Para>{error}</Para>
     </>
   );
+};
+Textfield.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  error: PropTypes.string.isRequired,
+  onBlur: PropTypes.func.isRequired,
 };

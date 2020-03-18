@@ -39,7 +39,6 @@ class InputDemo extends React.Component {
 
   getError = (key) => {
     const { touch } = this.state;
-    console.log('sss', touch);
     if (touch[key] && this.hasErrors()) {
       try {
         ValidationSchema.validateSyncAt(key, this.state);
@@ -54,7 +53,6 @@ class InputDemo extends React.Component {
     try {
       ValidationSchema.validateSync(this.state);
     } catch (err) {
-      console.log('inside catch');
       return true;
     }
     return false;
@@ -63,16 +61,13 @@ class InputDemo extends React.Component {
   isTouched = (key) => {
     const { touch } = this.state;
     this.setState({ touch: { ...touch, [key]: true } });
-    console.log('inside is touched', touch);
   }
 
   onChangedTextField = (e) => {
     this.setState({ name: e.target.value });
-    console.log(this.state);
   };
 
   onChangedSelectField = (e) => {
-    // this.setState({ sports: e.target.value });
     let { sports, cricket, football } = this.state;
     sports = e.target.value;
     if (sports === 'Select') {
