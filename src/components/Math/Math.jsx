@@ -41,7 +41,6 @@ Math.propTypes = {
   first: PropTypes.number.isRequired,
   second: PropTypes.number.isRequired,
   operator: PropTypes.string.isRequired,
-  result: PropTypes.number.isRequired,
   children: PropTypes.func,
 };
 
