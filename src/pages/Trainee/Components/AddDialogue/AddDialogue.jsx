@@ -1,4 +1,3 @@
-/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import MailIcon from '@material-ui/icons/Mail';
@@ -6,9 +5,9 @@ import PersonIcon from '@material-ui/icons/Person';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import {
   DialogActions, DialogContent, DialogContentText, Grid, InputAdornment, Button,
-  TextField, Dialog, DialogTitle,
+  TextField, Dialog, DialogTitle, withStyles,
 } from '@material-ui/core';
-import { getError, hasErrors, handleData, isTouched } from '../../HelperTrainee';
+import { Schema, useStyles } from '../../../../configs/constants';
 
 class FormDialog extends Component {
   constructor(props) {
@@ -27,14 +26,46 @@ class FormDialog extends Component {
     };
   }
 
+  getError = (key) => {
+    const { touch } = this.state;
+
+    if (touch[key] && this.hasErrors()) {
+      try {
+        Schema.validateSyncAt(key, this.state);
+      } catch (err) {
+        return err.message;
+      }
+    }
+    return false;
+  };
+
+  hasErrors = () => {
+    try {
+      Schema.validateSync(this.state);
+    } catch (err) {
+      return true;
+    }
+    return false;
+  };
+
+  isTouched = (key) => {
+    const { touch } = this.state;
+    this.setState({ touch: { ...touch, [key]: true } });
+  };
+
+  handleData = (data) => (event) => {
+    this.setState({ [data]: event.target.value });
+  };
+
   render() {
+    const { classes } = this.props;
     const { open, onClose, onSubmit } = this.props;
     const {
       name, email, password,
     } = this.state;
     return (
       <div>
-        <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
+        <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" className={classes.root}>
           <DialogTitle id="form-dialog-title">Add Trainee</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -146,5 +177,6 @@ FormDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  classes: PropTypes.func.isRequired,
 };
-export default FormDialog;
+export default withStyles(useStyles)(FormDialog);
