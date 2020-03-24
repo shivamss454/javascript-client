@@ -1,8 +1,9 @@
+import * as yup from 'yup';
+
 export const PUBLIC_IMAGE_FOLDER = '/images/';
 export const DEFAULT_BANNER_IMAGE = 'Banner/default.png';
 export const banner = ['images/cloud.jpg', 'images/dns-server.png', 'images/full-stack-web-development.jpg', 'images/load-balancer.png', 'images/js.jpg'];
 export const total = 5;
-
 export const SelectOptions = [
   {
     label: 'Cricket',
@@ -41,3 +42,19 @@ export const RadioFootball = [
     value: 'defender',
   },
 ];
+export const useStyles = (theme) => ({
+  root: {
+    flexGrow: 1,
+    marginBottom: theme.spacing(-6),
+  },
+});
+const Schema = yup.object().shape({
+  name: yup.string().required('name is required field').min(3),
+  email: yup.string().email().required('email is required '),
+  password: yup.string().required('password is required ')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+      'must contain 8 character, atleast one uppercase letter,one lowercase letter and one number'),
+  confirmPassword: yup.string().required('confirm password is required')
+    .oneOf([yup.ref('password'), null], 'password must match'),
+});
+export default Schema;

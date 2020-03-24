@@ -1,45 +1,54 @@
-import * as yup from 'yup';
+import React from 'react';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import PropTypes from 'prop-types';
+import { TextField } from '@material-ui/core';
 
- const Schema = yup.object().shape({
-  name: yup.string().required('name is required field').min(3),
-  email: yup.string().email().required('email is required '),
-  password: yup.string().required('password is required ')
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      'must contain 8 character, atleast one uppercase letter,one lowercase letter and one number'),
-  confirmPassword: yup.string().required('confirm password is required')
-    .oneOf([yup.ref('password'), null], 'password must match'),
-});
+function HelperTrainee(props) {
+  const {
+    icons, error, id, label, type, onBlur, onChange, helperText,
+  } = props;
+  const Icons = icons;
+  return (
+    <>
+      <TextField
+        required
+        id={id}
+        type={type}
+        label={label}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Icons style={{ fontSize: 20 }} />
+            </InputAdornment>
+          ),
+        }}
+        variant="outlined"
+        onChange={onChange}
+        helperText={helperText}
+        onBlur={onBlur}
+        error={error}
+        fullWidth
+      />
+    </>
+  );
+}
 
-getError = (key, state) => {
-  const { touch } = state;
-
-  if (touch[key] && hasErrors()) {
-    try {
-      Schema.validateSyncAt(key, state);
-    } catch (err) {
-      return err.message;
-    }
-  }
-  return false;
+HelperTrainee.propTypes = {
+  icons: PropTypes.instanceOf(Object),
+  error: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  label: PropTypes.string,
+  type: PropTypes.string,
+  helperText: PropTypes.string,
+  id: PropTypes.string,
 };
-
-hasErrors = (state) => {
-  try {
-    Schema.validateSync(state);
-  } catch (err) {
-    return true;
-  }
-  return false;
+HelperTrainee.defaultProps = {
+  error: false,
+  icons: {},
+  label: '',
+  type: false,
+  helperText: '',
+  id: '',
 };
-
-isTouched = (key, state) => {
-  const { touch } = state;
-  this.setState({ touch: { ...touch, [key]: true } });
-};
-
-handleData = (data) => (event) => {
-  this.setState({ [data]: event.target.value });
-};
-
-
-export{ getError, hasErrors, isTouched ,handleData };
+export default HelperTrainee;
