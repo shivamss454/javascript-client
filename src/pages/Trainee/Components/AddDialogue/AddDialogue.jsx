@@ -50,6 +50,11 @@ getFieldType = (val) => {
     return false;
   };
 
+  getFieldType = (val) => {
+    if (val === 'password' || val === 'confirm Password') return 'password';
+    return null;
+  }
+
   hasErrors = () => {
     try {
       Schema.validateSync(this.state);
