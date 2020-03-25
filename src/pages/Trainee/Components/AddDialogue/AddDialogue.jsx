@@ -4,11 +4,17 @@ import MailIcon from '@material-ui/icons/Mail';
 import PersonIcon from '@material-ui/icons/Person';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import {
-  DialogActions, DialogContent, DialogContentText, Grid, InputAdornment, Button,
-  TextField, Dialog, DialogTitle, withStyles,
+  DialogActions, DialogContent, DialogContentText, Grid, Button, Dialog, DialogTitle, withStyles,
 } from '@material-ui/core';
+import HelperTrainee from '../../HelperTrainee';
 import { Schema, useStyles } from '../../../../configs/constants';
 
+const Obj = {
+  name: PersonIcon,
+  email: MailIcon,
+  password: VisibilityOffIcon,
+  confirmPassword: VisibilityOffIcon,
+};
 class FormDialog extends Component {
   constructor(props) {
     super(props);
@@ -58,11 +64,25 @@ class FormDialog extends Component {
   };
 
   render() {
-    const { classes } = this.props;
-    const { open, onClose, onSubmit } = this.props;
+    const Result = [];
+    const {
+      open, onClose, onSubmit, classes,
+    } = this.props;
     const {
       name, email, password,
     } = this.state;
+    Object.keys(Obj).forEach((keys) => {
+      Result.push(<HelperTrainee
+        id={keys}
+        label={keys}
+        type={this.getFieldType(keys)}
+        onChange={this.handleData(keys)}
+        helperText={this.getError(keys)}
+        onBlur={() => this.isTouched(keys)}
+        icons={Obj[keys]}
+        error={this.getError(keys)}
+      />);
+    });
     return (
       <div>
         <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" className={classes.root}>
@@ -73,83 +93,16 @@ class FormDialog extends Component {
             </DialogContentText>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  id="Name"
-                  label="Name"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <PersonIcon style={{ fontSize: 20 }} />
-                      </InputAdornment>
-                    ),
-                  }}
-                  variant="outlined"
-                  onChange={this.handleData('name')}
-                  helperText={this.getError('name', this.state)}
-                  onBlur={() => this.isTouched('name', this.state)}
-                  error={this.getError('name', this.state)}
-                  fullWidth
-                />
+                {Result[0]}
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  id="email"
-                  label="Email"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <MailIcon style={{ fontSize: 20 }} />
-                      </InputAdornment>
-                    ),
-                  }}
-                  variant="outlined"
-                  error={this.getError('email', this.state)}
-                  onChange={this.handleData('email')}
-                  onBlur={() => this.isTouched('email', this.state)}
-                  helperText={this.getError('email', this.state)}
-                  fullWidth
-                />
+                {Result[1]}
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  id="outlined-start-adornment"
-                  label="password"
-                  type="password"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <VisibilityOffIcon style={{ fontSize: 20 }} />
-                      </InputAdornment>
-                    ),
-                  }}
-                  variant="outlined"
-                  error={this.getError('password', this.state)}
-                  onChange={this.handleData('password')}
-                  onBlur={() => this.isTouched('password', this.state)}
-                  helperText={this.getError('password', this.state)}
-                  fullWidth
-                />
+                {Result[2]}
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  id="password"
-                  type="password"
-                  label="confirm password"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <VisibilityOffIcon style={{ fontSize: 20 }} />
-                      </InputAdornment>
-                    ),
-                  }}
-                  variant="outlined"
-                  error={this.getError('confirmPassword', this.state)}
-                  onChange={this.handleData('confirmPassword')}
-                  onBlur={() => this.isTouched('confirmPassword', this.state)}
-                  helperText={this.getError('confirmPassword', this.state)}
-                  fullWidth
-                />
+                {Result[3]}
               </Grid>
             </Grid>
           </DialogContent>
@@ -177,6 +130,6 @@ FormDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  classes: PropTypes.func.isRequired,
+  classes: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 export default withStyles(useStyles)(FormDialog);
