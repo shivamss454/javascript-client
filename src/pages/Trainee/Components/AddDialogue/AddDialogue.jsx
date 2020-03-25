@@ -32,6 +32,11 @@ class FormDialog extends Component {
     };
   }
 
+getFieldType = (val) => {
+  if (val === 'password' || val === 'confirmPassword') return 'password';
+  return null;
+}
+
   getError = (key) => {
     const { touch } = this.state;
 
