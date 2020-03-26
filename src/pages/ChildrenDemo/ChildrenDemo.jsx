@@ -1,57 +1,131 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Typography, ThemeProvider } from '@material-ui/core';
 import Math from '../../components/Math/Math';
 import Theme from '../../theme';
 
-const ChildrenDemo = () => (
-  <>
-    <Math first={7} second={3} operator="+" />
-    <Math first={5} second={4} operator="-" />
-    <Math first={3} second={10} operator="*" />
-    <Math first={7} second={0} operator="/" />
-    <Math first={7} second={9} operator="^" />
-    <Math first={17} second={9} operator="+">
-      {
-        (first, second, result) => (
-          <p>
-                sum of
-            {' '}
-            {first}
-            {' '}
-                and
-            {' '}
-            {second}
-            {' '}
-                =
-            {' '}
-            {result}
-          </p>
-        )
-      }
-    </Math>
-    <ThemeProvider theme={Theme}>
-      <Typography>
-        <Math first={7} second={9} operator="+">
-          {
-            (first, second, result) => (
-              <p>
-                    sum of
-                {' '}
-                {first}
-                {' '}
-                    and
-                {' '}
-                {second}
-                {' '}
-                    =
-                {' '}
-                {result}
-              </p>
-            )
-          }
-        </Math>
-      </Typography>
-    </ThemeProvider>
-  </>
-);
+class ChildrenDemo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { };
+  }
+
+children = (first, second, operator, result) => {
+  switch (operator) {
+  case '+': {
+    return (
+      <p>
+        Sum of
+        {' '}
+        {' '}
+        {first}
+        {' '}
+        {' '}
+        and
+        {' '}
+        {second}
+        {' '}
+        is
+        {' '}
+        {' '}
+        {result}
+      </p>
+    );
+  }
+  case '-': {
+    return (
+      <p>
+        Subtraction of
+        {' '}
+        {' '}
+        { first }
+        {' '}
+        and
+        {' '}
+        {second}
+        {' '}
+        is
+        {' '}
+        {' '}
+        {result}
+      </p>
+    );
+  }
+  case '*': {
+    return (
+      <p>
+        Multiplication of
+        {' '}
+        {' '}
+        {' '}
+        {first}
+        {' '}
+        and
+        {' '}
+        {' '}
+        {second}
+        {' '}
+        is
+        {' '}
+        {' '}
+        {result}
+      </p>
+    );
+  }
+  case '/': {
+    return (
+      <p>
+        Division of
+        {' '}
+        {' '}
+        {first}
+        {' '}
+        and
+        {' '}
+        {second}
+        {' '}
+        is
+        {' '}
+        {' '}
+        {result}
+      </p>
+    );
+  }
+  default: {
+    return (
+      <p>
+        {' '}
+        {' '}
+        {first}
+        {' '}
+        {operator}
+        {' '}
+        {second}
+        {' '}
+        is
+        {' '}
+        {' '}
+        {result}
+      </p>
+    );
+  }
+  }
+}
+
+render() {
+  return (
+    <>
+      <ThemeProvider theme={Theme}>
+        <Typography>
+          <Math first={7} second={4} operator="+">{this.children}</Math>
+          <Math first={7} second={3} operator="-">{this.children}</Math>
+          <Math first={7} second={4} operator="*">{this.children}</Math>
+          <Math first={7} second={4} operator="/">{this.children}</Math>
+          <Math first={7} second={0} operator="/" />
+          <Math first={7} second={4} operator="^" />
+        </Typography>
+      </ThemeProvider>
+    </>
+  );
+}
+}
 export default ChildrenDemo;

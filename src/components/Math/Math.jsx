@@ -13,12 +13,13 @@ const Math = (props) => {
     break;
   case '*': result = first * second;
     break;
-  case '/': result = first / second;
+  case '/': result = (second === 0) ? 'Infinity' : first / second;
     break;
   default: result = 'invalid operation';
+    break;
   }
   if (children) {
-    return children(first, second, result);
+    return (children(first, second, operator, result));
   }
   return (
     <>
@@ -45,6 +46,6 @@ Math.propTypes = {
 };
 
 Math.defaultProps = {
-  children: undefined,
+  children: '',
 };
 export default Math;
