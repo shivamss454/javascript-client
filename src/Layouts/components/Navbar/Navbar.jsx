@@ -27,10 +27,10 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}>
             Trainee Portal
           </Typography>
-          <Button Component={Link} to="/Trainee" color="inherit">Trainee</Button>
-          <Button Component={Link} to="/TextFieldDemo" color="inherit">TextFieldDemo</Button>
-          <Button Component={Link} to="/InputDemo" color="inherit">InputDemo</Button>
-          <Button Component={Link} to="/ChildrenDemo" color="inherit" className={classes.Spacing}>ChildrenDemo</Button>
+          <Button component={Link} to="/Trainee" color="inherit">Trainee</Button>
+          <Button component={Link} to="/TextFieldDemo" color="inherit">TextFieldDemo</Button>
+          <Button component={Link} to="/InputDemo" color="inherit">InputDemo</Button>
+          <Button component={Link} to="/ChildrenDemo" color="inherit" className={classes.Spacing}>ChildrenDemo</Button>
           <Button color="inherit">Logout</Button>
         </Toolbar>
       </AppBar>

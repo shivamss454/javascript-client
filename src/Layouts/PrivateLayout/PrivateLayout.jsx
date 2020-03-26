@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Navbar from '../components/Navbar/Navbar';
 
@@ -10,5 +11,8 @@ const PrivateLayout = (props) => {
       {children}
     </>
   );
+};
+PrivateLayout.propTypes = {
+  children: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 export default PrivateLayout;

@@ -51,7 +51,7 @@ getFieldType = (val) => {
   };
 
   getFieldType = (val) => {
-    if (val === 'password' || val === 'confirm Password') return 'password';
+    if (val === 'password' || val === 'confirmPassword') return 'password';
     return null;
   }
 

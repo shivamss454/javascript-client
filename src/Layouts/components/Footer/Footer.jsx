@@ -8,6 +8,8 @@ function Footer() {
       <Icon>
         <p style={{ fontsize: '17px', color: 'grey' }}>
           <CopyrightIcon />
+          {' '}
+          Successive Technologies
         </p>
       </Icon>
     </footer>

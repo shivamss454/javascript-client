@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Footer from '../components/Footer/Footer';
 
 const AuthLayout = (props) => {
@@ -9,5 +10,8 @@ const AuthLayout = (props) => {
       <Footer />
     </>
   );
+};
+AuthLayout.propTypes = {
+  children: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 export default AuthLayout;
