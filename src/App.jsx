@@ -1,5 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
 import {
   BrowserRouter, Route, Redirect, Switch,
 } from 'react-router-dom';
@@ -29,15 +28,6 @@ function App() {
         </Switch>
       </BrowserRouter>
     </div>
-=======
-import Trainee from './pages/Trainee/Trainee';
-
-function App() {
-  return (
-    <>
-      <Trainee />
-    </>
->>>>>>> 39d9f02cbba7beceb48cc7dc7217f68891c310ef
   );
 }
 export default App;
