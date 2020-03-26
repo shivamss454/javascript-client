@@ -46,7 +46,7 @@ class FormDialog extends Component {
   };
 
   getFieldType = (val) => {
-    if (val === 'password' || val === 'confirm Password') return 'password';
+    if (val === 'password' || val === 'confirmPassword') return 'password';
     return null;
   }
 
