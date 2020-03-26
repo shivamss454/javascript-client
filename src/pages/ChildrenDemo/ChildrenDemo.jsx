@@ -11,103 +11,11 @@ class ChildrenDemo extends Component {
 
 children = (first, second, operator, result) => {
   switch (operator) {
-  case '+': {
-    return (
-      <p>
-        Sum of
-        {' '}
-        {' '}
-        {first}
-        {' '}
-        {' '}
-        and
-        {' '}
-        {second}
-        {' '}
-        is
-        {' '}
-        {' '}
-        {result}
-      </p>
-    );
-  }
-  case '-': {
-    return (
-      <p>
-        Subtraction of
-        {' '}
-        {' '}
-        { first }
-        {' '}
-        and
-        {' '}
-        {second}
-        {' '}
-        is
-        {' '}
-        {' '}
-        {result}
-      </p>
-    );
-  }
-  case '*': {
-    return (
-      <p>
-        Multiplication of
-        {' '}
-        {' '}
-        {' '}
-        {first}
-        {' '}
-        and
-        {' '}
-        {' '}
-        {second}
-        {' '}
-        is
-        {' '}
-        {' '}
-        {result}
-      </p>
-    );
-  }
-  case '/': {
-    return (
-      <p>
-        Division of
-        {' '}
-        {' '}
-        {first}
-        {' '}
-        and
-        {' '}
-        {second}
-        {' '}
-        is
-        {' '}
-        {' '}
-        {result}
-      </p>
-    );
-  }
-  default: {
-    return (
-      <p>
-        {' '}
-        {' '}
-        {first}
-        {' '}
-        {operator}
-        {' '}
-        {second}
-        {' '}
-        is
-        {' '}
-        {' '}
-        {result}
-      </p>
-    );
-  }
+  case '+': return (`Sum of ${first} and ${second} is ${result}`);
+  case '-': return (`Substraction of ${first} and ${second} is ${result}`);
+  case '*': return (`multiplication of ${first} and ${second} is ${result}`);
+  case '/': return (`division of ${first} and ${second} is ${result}`);
+  default: return (` ${first} ${operator} ${second} is invalid ${result}`);
   }
 }
 
@@ -117,8 +25,14 @@ render() {
       <ThemeProvider theme={Theme}>
         <Typography>
           <Math first={7} second={4} operator="+">{this.children}</Math>
+          <br />
+          <br />
           <Math first={7} second={3} operator="-">{this.children}</Math>
+          <br />
+          <br />
           <Math first={7} second={4} operator="*">{this.children}</Math>
+          <br />
+          <br />
           <Math first={7} second={4} operator="/">{this.children}</Math>
           <Math first={7} second={0} operator="/" />
           <Math first={7} second={4} operator="^" />
