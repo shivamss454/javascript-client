@@ -46,6 +46,6 @@ Math.propTypes = {
 };
 
 Math.defaultProps = {
-  children: undefined,
+  children: '',
 };
 export default Math;
