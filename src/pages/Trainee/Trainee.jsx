@@ -6,7 +6,6 @@ import TraineeDetail from './TraineeDetail';
 
 const TraineeRoute = (props) => {
   const { match: { path } } = props;
-  console.log('yyyyyyy', props);
   return (
     <>
       <BrowserRouter>

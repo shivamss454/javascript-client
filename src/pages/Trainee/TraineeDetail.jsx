@@ -33,7 +33,6 @@ function getDateFormatted(date) {
 export default function TraineeDetail() {
   const classes = useStyles();
   const history = useHistory();
-  console.log('history ========', history);
   const { TraineeId } = useParams();
 
   const found = trainee.find((elem) => elem.id === TraineeId);
