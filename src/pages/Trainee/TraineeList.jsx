@@ -1,10 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormDialog from './Components/AddDialogue/AddDialogue';
+import Table from './Components/Table/Table';
 import trainee from './data/trainee';
 
-export default class Trainee extends React.Component {
+const useStyles = (theme) => ({
+  root: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    margin: theme.spacing(-1, 0, -3),
+  },
+});
+
+class Trainee extends React.Component {
   constructor(props) {
     super(props);
 
@@ -30,12 +41,32 @@ export default class Trainee extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     const { open } = this.state;
     return (
       <>
-        <Button type="button" color="primary" variant="outlined" onClick={this.handleClickOpen}>
-          Add Trainee
-        </Button>
+        <div className={classes.root}>
+          <Button type="button" color="primary" variant="outlined" onClick={this.handleClickOpen}>
+            Add Trainee
+          </Button>
+        </div>
+        <Table
+          id="id"
+          data={trainee}
+          columns={
+            [
+              {
+                field: 'name',
+                label: 'Name',
+                align: 'center',
+              },
+              {
+                field: 'email',
+                label: 'Email Address',
+              },
+            ]
+          }
+        />
         <FormDialog open={open} onClose={this.handleClickClose} onSubmit={() => this.handleSubmit} />
         <ul>
           {
@@ -50,3 +81,7 @@ export default class Trainee extends React.Component {
     );
   }
 }
+Trainee.propTypes = {
+  classes: PropTypes.func.isRequired,
+};
+export default withStyles(useStyles)(Trainee);
