@@ -7,7 +7,7 @@ import {
   DialogActions, DialogContent, DialogContentText, Grid, Button, Dialog, DialogTitle, withStyles,
 } from '@material-ui/core';
 import HelperTrainee from '../../HelperTrainee';
-import Schema, { useStyles } from '../../../../configs/constants';
+import { Schema, useStyles } from '../../../../configs/constants';
 
 const Obj = {
   name: PersonIcon,
@@ -45,6 +45,11 @@ class FormDialog extends Component {
     return false;
   };
 
+  getFieldType = (val) => {
+    if (val === 'password' || val === 'confirmPassword') return 'password';
+    return null;
+  }
+
   hasErrors = () => {
     try {
       Schema.validateSync(this.state);
@@ -53,11 +58,6 @@ class FormDialog extends Component {
     }
     return false;
   };
-
-getFieldType = (val) => {
-  if (val === 'password' || val === 'confirmPassword') return 'password';
-  return null;
-}
 
   isTouched = (key) => {
     const { touch } = this.state;

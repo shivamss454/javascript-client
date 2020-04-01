@@ -42,13 +42,11 @@ export const RadioFootball = [
     value: 'defender',
   },
 ];
-export const useStyles = (theme) => ({
-  root: {
-    flexGrow: 1,
-    marginBottom: theme.spacing(-6),
-  },
+const LoginSchema = yup.object().shape({
+  email: yup.string().email().label('Email').required('email is required'),
+  password: yup.string().label('Password').required('password is required'),
 });
-const Schema = yup.object().shape({
+export const Schema = yup.object().shape({
   name: yup.string().required('name is required field').min(3),
   email: yup.string().email().required('email is required '),
   password: yup.string().required('password is required ')
@@ -57,4 +55,28 @@ const Schema = yup.object().shape({
   confirmPassword: yup.string().required('confirm password is required')
     .oneOf([yup.ref('password'), null], 'password must match'),
 });
-export default Schema;
+export const useStyles = (theme) => ({
+  Container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  root: {
+    flexGrow: 1,
+  },
+  form: {
+    width: '90%',
+    marginTop: theme.spacing(1),
+  },
+  box: {
+    width: '30%',
+  },
+  submit: {
+    marginTop: theme.spacing(5),
+  },
+});
+export default LoginSchema;
