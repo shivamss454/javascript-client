@@ -1,18 +1,10 @@
 import React from 'react';
-// import Textfielddemo from './pages/TextFieldDemo/TextFieldDemo';
-// import { InputDemo } from './pages/InputDemo';
-import { ThemeProvider } from '@material-ui/core/styles';
-import theme from './theme';
-import ChildrenDemo from './pages/ChildrenDemo/ChildrenDemo';
-
+import Trainee from './pages/Trainee/Trainee';
 
 function App() {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <ChildrenDemo />
-      </ThemeProvider>
-
+      <Trainee />
     </>
   );
 }
