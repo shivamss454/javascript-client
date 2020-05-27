@@ -67,16 +67,18 @@ export const useStyles = (theme) => ({
   },
   root: {
     flexGrow: 1,
+    marginBottom: theme.spacing(-6),
   },
   form: {
     width: '90%',
     marginTop: theme.spacing(1),
   },
   box: {
+    marginTop: theme.spacing(10),
     width: '30%',
   },
   submit: {
-    marginTop: theme.spacing(5),
+    margin: theme.spacing(3, 0, 2),
   },
 });
 export default LoginSchema;
