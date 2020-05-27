@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(5),
   },
   margin: {
-    margin: theme.spacing(2),
+    marginTop: theme.spacing(-7),
   },
   detail: {
     display: 'flex',
