@@ -14,6 +14,7 @@ import NoMatch from '../NoMatch/NoMatch';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    margin: theme.spacing(5),
   },
   margin: {
     margin: theme.spacing(2),
