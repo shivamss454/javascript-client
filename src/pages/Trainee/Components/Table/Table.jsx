@@ -9,9 +9,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-const useStyles = () => makeStyles({
+const useStyles = makeStyles({
   table: {
-    minWidth: 400,
+    minWidth: 650,
   },
   column: {
     color: 'grey',
@@ -24,7 +24,7 @@ export default function SimpleTable(props) {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className={classes.Container}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>

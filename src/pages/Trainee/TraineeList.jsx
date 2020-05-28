@@ -8,10 +8,18 @@ import Table from './Components/Table/Table';
 import trainee from './data/trainee';
 
 const useStyles = (theme) => ({
-  root: {
+  paper: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: theme.spacing(3),
+  },
+  button: {
+    marginTop: theme.spacing(-3),
+    marginBottom: theme.spacing(2),
+  },
+  buttonPosition: {
     display: 'flex',
     justifyContent: 'flex-end',
-    margin: theme.spacing(-1, 0, -3),
   },
 });
 
@@ -44,12 +52,13 @@ class Trainee extends React.Component {
     const { classes } = this.props;
     const { open } = this.state;
     return (
-      <>
-        <div className={classes.root}>
-          <Button type="button" color="primary" variant="outlined" onClick={this.handleClickOpen}>
-            Add Trainee
+      <div className={classes.paper}>
+        <div className={classes.buttonPosition}>
+          <Button type="button" color="primary" className={classes.button} variant="outlined" onClick={this.handleClickOpen}>
+            Add TraineeList
           </Button>
         </div>
+        <FormDialog open={open} onClose={this.handleClickClose} onSubmit={() => this.handleSubmit} />
         <Table
           id="id"
           data={trainee}
@@ -67,7 +76,6 @@ class Trainee extends React.Component {
             ]
           }
         />
-        <FormDialog open={open} onClose={this.handleClickClose} onSubmit={() => this.handleSubmit} />
         <ul>
           {
             trainee && trainee.length && trainee.map((data) => (
@@ -77,7 +85,7 @@ class Trainee extends React.Component {
             ))
           }
         </ul>
-      </>
+      </div>
     );
   }
 }
