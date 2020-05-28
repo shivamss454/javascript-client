@@ -101,7 +101,7 @@ class InputDemo extends React.Component {
           error={this.getError('name')}
           onBlur={() => this.isTouched('name')}
         />
-        <h3>Select the Game you play</h3>
+        <h3>Select The Game You Play</h3>
         <SelectField
           onChange={this.onChangedSelectField}
           defaultoptions="Select"

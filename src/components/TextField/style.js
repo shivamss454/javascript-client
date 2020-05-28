@@ -3,12 +3,12 @@ import styled, { css } from 'styled-components';
 const Input = styled.input`
 background: transparent;
   border-radius: 3px;
-  width:97%;
+  width:99.3%;
   padding:1%;
   border: 1px solid grey;
   color: black;
   background: white;
-  margin-left:.5%;
+  margin-left:.3%;
 
   ${(props) => props.error && css`
     border: 1px solid red;

@@ -17,13 +17,13 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <Redirect to="/Trainee" />
+            <Redirect to="/trainee" />
           </Route>
           <AuthRoute path="/Login" component={Login} />
-          <PrivateRoute path="/Trainee" component={Trainee} />
-          <PrivateRoute path="/TextFieldDemo" component={TextFieldDemo} />
-          <PrivateRoute path="/Inputdemo" component={InputDemo} />
-          <PrivateRoute path="/ChildrenDemo" component={ChildrenDemo} />
+          <PrivateRoute path="/trainee" component={Trainee} />
+          <PrivateRoute path="/text-field-demo" component={TextFieldDemo} />
+          <PrivateRoute path="/input-demo" component={InputDemo} />
+          <PrivateRoute path="/children-demo" component={ChildrenDemo} />
           <PrivateRoute component={NotFoundRoute} />
         </Switch>
       </BrowserRouter>
