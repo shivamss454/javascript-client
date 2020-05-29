@@ -1,4 +1,5 @@
 import React from 'react';
+import * as moment from 'moment';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
@@ -29,6 +30,9 @@ class Trainee extends React.Component {
 
     this.state = {
       open: false,
+      order: '',
+      orderBy: '',
+      selected: '',
     };
   }
 
@@ -48,9 +52,25 @@ class Trainee extends React.Component {
     });
   }
 
+  handleSort = (field) => () => {
+    const { order } = this.state;
+    this.setState({
+      orderBy: field,
+      order: order === 'asc' ? 'desc' : 'asc',
+    });
+  }
+
+  handleSelect = (event, data) => {
+    this.setState({ selected: event.target.value }, () => console.log(data));
+  };
+
+  Format = (date) => moment(date).format('dddd, MMMM do YYYY, h:mm:ss a')
+
+  Convert = (email) => email.toUpperCase()
+
   render() {
     const { classes } = this.props;
-    const { open } = this.state;
+    const { open, order, orderBy } = this.state;
     return (
       <div className={classes.paper}>
         <div className={classes.buttonPosition}>
@@ -72,9 +92,20 @@ class Trainee extends React.Component {
               {
                 field: 'email',
                 label: 'Email Address',
+                format: (value) => value && value.toUpperCase(),
+              },
+              {
+                field: 'createdAt',
+                label: 'Date',
+                align: 'right',
+                format: this.Format,
               },
             ]
           }
+          orderBy={orderBy}
+          order={order}
+          onSort={this.handleSort}
+          onSelect={this.handleSelect}
         />
         <ul>
           {
@@ -91,5 +122,11 @@ class Trainee extends React.Component {
 }
 Trainee.propTypes = {
   classes: PropTypes.func.isRequired,
+  order: PropTypes.oneOf(['asc', 'desc']),
+  orderBy: PropTypes.string,
+};
+Trainee.defaultProps = {
+  order: 'asc',
+  orderBy: '',
 };
 export default withStyles(useStyles)(Trainee);
