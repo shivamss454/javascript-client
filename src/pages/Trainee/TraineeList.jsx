@@ -1,10 +1,28 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import FormDialog from './Components/AddDialogue/AddDialogue';
+import { FormDialog, Table } from './Components/index';
 import trainee from './data/trainee';
 
-export default class Trainee extends React.Component {
+const useStyles = (theme) => ({
+  paper: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: theme.spacing(3),
+  },
+  button: {
+    marginTop: theme.spacing(-3),
+    marginBottom: theme.spacing(2),
+  },
+  buttonPosition: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+});
+
+class Trainee extends React.Component {
   constructor(props) {
     super(props);
 
@@ -30,13 +48,34 @@ export default class Trainee extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     const { open } = this.state;
     return (
-      <>
-        <Button type="button" color="primary" variant="outlined" onClick={this.handleClickOpen}>
-          Add Trainee
-        </Button>
+      <div className={classes.paper}>
+        <div className={classes.buttonPosition}>
+          <Button type="button" color="primary" className={classes.button} variant="outlined" onClick={this.handleClickOpen}>
+            Add TraineeList
+          </Button>
+        </div>
         <FormDialog open={open} onClose={this.handleClickClose} onSubmit={() => this.handleSubmit} />
+        <Table
+          id="table"
+          data={trainee}
+          columns={
+            [
+              {
+                field: 'name',
+                label: 'Name',
+                align: 'center',
+              },
+              {
+                field: 'email',
+                label: 'Email Address',
+                align: 'left',
+              },
+            ]
+          }
+        />
         <ul>
           {
             trainee && trainee.length && trainee.map((data) => (
@@ -46,7 +85,11 @@ export default class Trainee extends React.Component {
             ))
           }
         </ul>
-      </>
+      </div>
     );
   }
 }
+Trainee.propTypes = {
+  classes: PropTypes.func.isRequired,
+};
+export default withStyles(useStyles)(Trainee);

@@ -1,3 +1,4 @@
 import FormDialog from './AddDialogue/AddDialogue';
+import Table from './Table/Table';
 
-export default FormDialog;
+export { FormDialog, Table };
