@@ -59,7 +59,7 @@ class Trainee extends React.Component {
         </div>
         <FormDialog open={open} onClose={this.handleClickClose} onSubmit={() => this.handleSubmit} />
         <Table
-          id="id"
+          id="table"
           data={trainee}
           columns={
             [
@@ -71,6 +71,7 @@ class Trainee extends React.Component {
               {
                 field: 'email',
                 label: 'Email Address',
+                align: 'left',
               },
             ]
           }
