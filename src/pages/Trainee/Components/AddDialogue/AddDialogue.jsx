@@ -6,6 +6,7 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import {
   DialogActions, DialogContent, DialogContentText, Grid, Button, Dialog, DialogTitle, withStyles,
 } from '@material-ui/core';
+import { MyContext } from '../../../../contexts';
 import HelperTrainee from '../../HelperTrainee';
 import { Schema, useStyles } from '../../../../configs/constants';
 
@@ -115,16 +116,25 @@ class FormDialog extends Component {
             <Button onClick={onClose} color="primary">
               Cancel
             </Button>
-            <Button
-              onClick={() => onSubmit()({
-                name, email, password,
-              })}
+            <MyContext.Consumer>
+              {
+                ({ opensnackbar }) => (
+                  <Button
+                    onClick={() => {
+                      opensnackbar('this is a success message', 'success');
+                      onSubmit()({
+                        name, email, password,
+                      });
+                    }}
 
-              color="primary"
-              disabled={this.hasErrors()}
-            >
-              Submit
-            </Button>
+                    color="primary"
+                    disabled={this.hasErrors()}
+                  >
+                    Submit
+                  </Button>
+                )
+              }
+            </MyContext.Consumer>
           </DialogActions>
         </Dialog>
       </div>
