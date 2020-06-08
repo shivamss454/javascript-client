@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import FormDialog from './Components/AddDialogue/AddDialogue';
-import Table from './Components/Table/Table';
+import { FormDialog, Table } from './Components/index';
 import trainee from './data/trainee';
 
 const useStyles = (theme) => ({
@@ -71,6 +70,7 @@ class Trainee extends React.Component {
   render() {
     const { classes } = this.props;
     const { open, order, orderBy } = this.state;
+    console.log(this.state);
     return (
       <div className={classes.paper}>
         <div className={classes.buttonPosition}>
@@ -80,7 +80,7 @@ class Trainee extends React.Component {
         </div>
         <FormDialog open={open} onClose={this.handleClickClose} onSubmit={() => this.handleSubmit} />
         <Table
-          id="id"
+          id="table"
           data={trainee}
           columns={
             [
@@ -92,6 +92,7 @@ class Trainee extends React.Component {
               {
                 field: 'email',
                 label: 'Email Address',
+                align: 'left',
                 format: (value) => value && value.toUpperCase(),
               },
               {
