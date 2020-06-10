@@ -5,8 +5,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { FormDialog, EditDialog, RemoveDialog } from './Components/index';
-import Table from './Components/Table/Table';
+import {
+  FormDialog, EditDialog, RemoveDialog, Table,
+} from './Components/index';
 import trainee from './data/trainee';
 
 const useStyles = (theme) => ({
@@ -121,7 +122,7 @@ class Trainee extends React.Component {
           data={newData}
         />
         <Table
-          id="id"
+          id="table"
           data={trainee}
           columns={
             [
@@ -132,6 +133,7 @@ class Trainee extends React.Component {
               {
                 field: 'email',
                 label: 'Email Address',
+                align: 'left',
                 format: (value) => value && value.toUpperCase(),
               },
               {
