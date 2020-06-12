@@ -5,10 +5,12 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import localStorage from 'local-storage';
 import {
-  FormDialog, EditDialog, RemoveDialog, Table,
+  FormDialog, EditDialog, RemoveDialog,
 } from './Components/index';
-import trainee from './data/trainee';
+import EnhancedTable from './Components/Table/Table';
+import callAPI from '../../libs/utils/api';
 
 const useStyles = (theme) => ({
   paper: {
@@ -34,11 +36,15 @@ class Trainee extends React.Component {
       order: '',
       orderBy: '',
       selected: '',
+      message: '',
+      count: 0,
+      loading: true,
       editdialog: false,
       removedialog: false,
       newData: {},
+      rowdata: [],
       page: 0,
-      rowsPerPage: 3,
+      rowsPerPage: 20,
     };
   }
 
@@ -67,10 +73,13 @@ class Trainee extends React.Component {
   }
 
   handleChangePage = (event, newpage) => {
-    this.setState({ page: newpage });
+    console.log('inside nandle changepage newPage =', newpage);
+    this.componentDidMount(newpage);
+    this.setState({ page: newpage, loading: true });
   }
 
   handleRowsPerPage = (event) => {
+    this.componentDidMount();
     this.setState({ page: 0, rowsPerPage: event.target.value });
   }
 
@@ -90,10 +99,40 @@ class Trainee extends React.Component {
 
   Convert = (email) => email.toUpperCase()
 
+  componentDidMount = (newpage) => {
+    console.log('inside component did mount', newpage);
+    const { rowsPerPage } = this.state;
+    const { value } = this.context;
+
+    callAPI(
+      'get',
+      '/trainee',
+      {
+        params: { skip: newpage * rowsPerPage, limit: newpage * rowsPerPage + rowsPerPage },
+        headers: {
+          Authorization: localStorage.get('token'),
+        },
+      },
+    ).then((res) => {
+      if (res.data === 'undefined') {
+        this.setState({ loading: false, message: 'this is an error message' }, () => {
+          const { message } = this.state;
+          value.opensnackbar(message, 'error');
+        });
+      } else {
+        console.log('response from /trainee', res);
+        this.setState({ rowdata: res.data.records, count: res.data.count, loading: false });
+      }
+    }).catch((error) => {
+      console.log(error.message);
+    });
+  }
+
   render() {
     const { classes } = this.props;
     const {
-      open, order, orderBy, page, rowsPerPage, editdialog, removedialog, newData,
+      open, order, orderBy, page, rowsPerPage, editdialog,
+      removedialog, newData, count, rowdata, loading,
     } = this.state;
     console.log(this.state);
     return (
@@ -121,9 +160,9 @@ class Trainee extends React.Component {
           onSubmit={this.handleSubmit}
           data={newData}
         />
-        <Table
+        <EnhancedTable
           id="table"
-          data={trainee}
+          data={rowdata}
           columns={
             [
               {
@@ -158,11 +197,12 @@ class Trainee extends React.Component {
           order={order}
           onSort={this.handleSort}
           onSelect={this.handleSelect}
-          count={100}
+          count={count}
           page={page}
           rowsPerPage={rowsPerPage}
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleRowsPerPage}
+          loading={loading}
         />
       </div>
     );
