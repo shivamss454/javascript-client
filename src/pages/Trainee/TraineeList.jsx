@@ -55,12 +55,32 @@ class Trainee extends React.Component {
 
   handleClickClose = () => {
     this.setState({ open: false, editdialog: false, removedialog: false }, () => {
+      this.componentDidMount();
     });
   }
 
   handleSubmit = (data) => {
-    this.setState({ open: false, editdialog: false, removedialog: false }, () => {
+    const {
+      page, rowsPerPage, count, removedialog,
+    } = this.state;
+    if (removedialog) {
+      this.setState({ removedialog: false });
+      // console.log('inside handle submit page=', page);
+      // console.log('inside handle submit count=', count);
+      if (count !== page * rowsPerPage) {
+        // console.log('inside first if');
+        this.reloadTable(page);
+        if (page !== 0 && count - page * rowsPerPage === 1) {
+          this.setState({ page: page - 1 });
+          this.reloadTable(page);
+        }
+      }
+    }
+    this.setState({
+      open: false, editdialog: false, loading: true,
+    }, () => {
       console.log(data);
+      this.reloadTable(page);
     });
   }
 
@@ -73,14 +93,14 @@ class Trainee extends React.Component {
   }
 
   handleChangePage = (event, newpage) => {
-    console.log('inside nandle changepage newPage =', newpage);
-    this.componentDidMount(newpage);
+    // console.log('inside handle changepage newPage =', newpage);
     this.setState({ page: newpage, loading: true });
+    this.reloadTable(newpage);
   }
 
   handleRowsPerPage = (event) => {
-    this.componentDidMount();
-    this.setState({ page: 0, rowsPerPage: event.target.value });
+    this.setState({ page: 0, rowsPerPage: event.target.value }, () => {
+    });
   }
 
   handleSelect = (event, data) => {
@@ -99,16 +119,15 @@ class Trainee extends React.Component {
 
   Convert = (email) => email.toUpperCase()
 
-  componentDidMount = (newpage) => {
-    console.log('inside component did mount', newpage);
+  reloadTable = (newpage) => {
     const { rowsPerPage } = this.state;
-    const { value } = this.context;
+    const value = this.context;
 
     callAPI(
       'get',
       '/trainee',
       {
-        params: { skip: newpage * rowsPerPage, limit: newpage * rowsPerPage + rowsPerPage },
+        params: { skip: newpage * rowsPerPage, limit: rowsPerPage },
         headers: {
           Authorization: localStorage.get('token'),
         },
@@ -120,12 +139,15 @@ class Trainee extends React.Component {
           value.opensnackbar(message, 'error');
         });
       } else {
-        console.log('response from /trainee', res);
         this.setState({ rowdata: res.data.records, count: res.data.count, loading: false });
       }
     }).catch((error) => {
       console.log(error.message);
     });
+  }
+
+  componentDidMount = () => {
+    this.reloadTable(0);
   }
 
   render() {
@@ -134,7 +156,6 @@ class Trainee extends React.Component {
       open, order, orderBy, page, rowsPerPage, editdialog,
       removedialog, newData, count, rowdata, loading,
     } = this.state;
-    console.log(this.state);
     return (
       <div className={classes.paper}>
         <div className={classes.buttonPosition}>
@@ -187,10 +208,12 @@ class Trainee extends React.Component {
             {
               icon: <EditIcon />,
               handler: this.handleEditDialogOpen,
+              label: 'edit icon',
             },
             {
               icon: <DeleteIcon />,
               handler: this.handleRemoveDialogOpen,
+              label: 'delete icon',
             },
           ]}
           orderBy={orderBy}

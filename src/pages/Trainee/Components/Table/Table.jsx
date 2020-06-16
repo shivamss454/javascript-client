@@ -70,33 +70,46 @@ export function SimpleTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {(rowsPerPage > 0
-            ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : data
-          ).map((ele) => (
-            <StyledTableRow hover key={ele[id]}>
-              {
-                columns && columns.length && columns.map(({ field, align, format }) => (
+          {data.length ? (
+            <>
+              {data.map((ele) => (
+                <StyledTableRow hover key={ele[id]}>
+                  {
+                    columns && columns.length && columns.map(({ field, align, format }) => (
 
-                  <StyledTableCell
-                    align={align}
-                    format={format}
-                    onClick={(event) => onSelect(event, ele.name)}
-                    component="th"
-                    scope="row"
-                  >
-                    {format !== undefined ? format(ele[field]) : ele[field]}
+                      <StyledTableCell
+                        align={align}
+                        format={format}
+                        onClick={(event) => onSelect(event, ele.name)}
+                        component="th"
+                        scope="row"
+                      >
+                        {format !== undefined ? format(ele[field]) : ele[field]}
 
-                  </StyledTableCell>
-                ))
-              }
-              {actions && actions.length && actions.map(({ icon, handler }) => (
-                <TableCell onClick={() => handler(ele)}>
-                  {icon}
-                </TableCell>
+                      </StyledTableCell>
+                    ))
+                  }
+                  {actions && actions.length && actions.map(({ icon, handler }) => (
+                    <TableCell onClick={() => handler(ele)}>
+                      {icon}
+                    </TableCell>
+                  ))}
+                </StyledTableRow>
               ))}
-            </StyledTableRow>
-          ))}
+            </>
+          )
+            : (
+              <TableRow>
+                <TableCell align="center" colSpan={4}>
+                  <div align="center">
+                    <h1>
+                      OOPS No More Trainees!!
+                    </h1>
+                  </div>
+                </TableCell>
+              </TableRow>
+            )}
+
         </TableBody>
       </Table>
       <TablePagination
