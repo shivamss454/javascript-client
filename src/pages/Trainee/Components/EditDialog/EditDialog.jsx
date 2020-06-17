@@ -81,7 +81,7 @@ class EditDialog extends Component {
             opensnackbar(message, 'success');
           });
         } else {
-          this.setState({ loading: false, message: 'trainee not updated successfully' }, () => {
+          this.setState({ loading: false, message: 'this is an Error Message' }, () => {
             const { message } = this.state;
             opensnackbar(message, 'error');
           });

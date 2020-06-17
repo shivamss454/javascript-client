@@ -51,14 +51,14 @@ class FormDialog extends Component {
       },
     );
     this.setState({ loading: false });
-    // console.log('response from CallAPI', res);
+    console.log('response from CallAPI', res);
     if (res.status === 'ok') {
-      this.setState({ message: ' this is a success message' }, () => {
+      this.setState({ message: res.message }, () => {
         const { message } = this.state;
         opensnackbar(message, 'success');
       });
     } else {
-      this.setState({ message: 'this is an error message' }, () => {
+      this.setState({ message: 'this is an Error Message' }, () => {
         const { message } = this.state;
         opensnackbar(message, 'error');
       });
