@@ -39,7 +39,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 export default function SimpleTable(props) {
   const {
-    id, data, columns, order, orderBy, onSort, onSelect,
+    id, data, columns, order, orderBy, onSort, onSelect, count,
     actions, page, rowsPerPage, onChangePage, onChangeRowsPerPage,
   } = props;
   const classes = useStyles();
@@ -96,15 +96,18 @@ export default function SimpleTable(props) {
 
         </TableBody>
       </Table>
-      <TablePagination
-        component="div"
-        rowsPerPageOptions={[3, 5, 7, 10, 20, { label: 'All', value: -1 }]}
-        count={data.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={onChangePage}
-        onChangeRowsPerPage={onChangeRowsPerPage}
-      />
+      {count ? (
+        <TablePagination
+          component="div"
+          rowsPerPageOptions={[3, 5, 7, 10, 20, { label: 'All', value: -1 }]}
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={onChangePage}
+          onChangeRowsPerPage={onChangeRowsPerPage}
+        />
+      )
+        : null}
     </TableContainer>
   );
 }
@@ -114,6 +117,7 @@ SimpleTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   order: PropTypes.oneOf(['asc', 'desc']),
   orderBy: PropTypes.string,
+  count: PropTypes.number.isRequired,
   onSelect: PropTypes.func.isRequired,
   onSort: PropTypes.func.isRequired,
   page: PropTypes.number,
