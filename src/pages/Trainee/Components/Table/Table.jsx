@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
-  Table, TableBody, TableCell, TableContainer, TableSortLabel, TableHead, TableRow, Paper,
+  Table, TableBody, TableCell, TableContainer,
+  TableSortLabel, TableHead, TableRow, TablePagination, Paper,
 } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -38,7 +39,8 @@ const StyledTableRow = withStyles((theme) => ({
 
 export default function SimpleTable(props) {
   const {
-    id, data, columns, order, orderBy, onSort, onSelect,
+    id, data, columns, order, orderBy, onSort, onSelect, count,
+    actions, page, rowsPerPage, onChangePage, onChangeRowsPerPage,
   } = props;
   const classes = useStyles();
 
@@ -67,7 +69,7 @@ export default function SimpleTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((ele) => (
+          {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((ele) => (
             <StyledTableRow hover key={ele[id]}>
               {
                 columns && columns.length && columns.map(({ field, align, format }) => (
@@ -84,11 +86,28 @@ export default function SimpleTable(props) {
                   </StyledTableCell>
                 ))
               }
-
+              {actions && actions.length && actions.map(({ icon, handler }) => (
+                <TableCell onClick={() => handler(ele)}>
+                  {icon}
+                </TableCell>
+              ))}
             </StyledTableRow>
           ))}
+
         </TableBody>
       </Table>
+      {count ? (
+        <TablePagination
+          component="div"
+          rowsPerPageOptions={[3, 5, 7, 10, 20, { label: 'All', value: -1 }]}
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={onChangePage}
+          onChangeRowsPerPage={onChangeRowsPerPage}
+        />
+      )
+        : null}
     </TableContainer>
   );
 }
@@ -98,10 +117,18 @@ SimpleTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   order: PropTypes.oneOf(['asc', 'desc']),
   orderBy: PropTypes.string,
+  count: PropTypes.number.isRequired,
   onSelect: PropTypes.func.isRequired,
   onSort: PropTypes.func.isRequired,
+  page: PropTypes.number,
+  rowsPerPage: PropTypes.number,
+  onChangePage: PropTypes.func.isRequired,
+  onChangeRowsPerPage: PropTypes.func.isRequired,
+  actions: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 SimpleTable.defaultProps = {
   orderBy: '',
   order: 'asc',
+  page: 0,
+  rowsPerPage: 100,
 };
