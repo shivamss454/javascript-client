@@ -86,7 +86,7 @@ class Trainee extends React.Component {
     this.setState({ removedialog: true, newData: data });
   }
 
-  Format = (date) => moment(date).format('dddd, MMMM do YYYY, h:mm:ss a')
+  Format = (date) => moment(date).format('dddd, MMMM Do YYYY, h:mm:ss a')
 
   Convert = (email) => email.toUpperCase()
 
