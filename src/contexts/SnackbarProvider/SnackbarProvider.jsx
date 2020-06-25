@@ -71,7 +71,7 @@ function CustomizedSnackbars() {
           <Alert onClose={handleClose} severity="success">
             {message}
           </Alert>
-        ) : <Alert onClose={handleClose} severity="error">This is an error message!</Alert>}
+        ) : <Alert onClose={handleClose} severity="error">{message}</Alert>}
       </Snackbar>
     </div>
   );
