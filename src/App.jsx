@@ -10,23 +10,26 @@ import ChildrenDemo from './pages/ChildrenDemo/ChildrenDemo';
 import Trainee from './pages/Trainee/Trainee';
 import Login from './pages/Login/Login';
 import NotFoundRoute from './pages/NoMatch/NoMatch';
+import SnackbarProvider from './contexts';
 
 function App() {
   return (
     <div>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/">
-            <Redirect to="/trainee" />
-          </Route>
-          <AuthRoute path="/Login" component={Login} />
-          <PrivateRoute path="/trainee" component={Trainee} />
-          <PrivateRoute path="/text-field-demo" component={TextFieldDemo} />
-          <PrivateRoute path="/input-demo" component={InputDemo} />
-          <PrivateRoute path="/children-demo" component={ChildrenDemo} />
-          <PrivateRoute component={NotFoundRoute} />
-        </Switch>
-      </BrowserRouter>
+      <SnackbarProvider>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/">
+              <Redirect to="/trainee" />
+            </Route>
+            <AuthRoute path="/Login" component={Login} />
+            <PrivateRoute path="/trainee" component={Trainee} />
+            <PrivateRoute path="/text-field-demo" component={TextFieldDemo} />
+            <PrivateRoute path="/input-demo" component={InputDemo} />
+            <PrivateRoute path="/children-demo" component={ChildrenDemo} />
+            <PrivateRoute component={NotFoundRoute} />
+          </Switch>
+        </BrowserRouter>
+      </SnackbarProvider>
     </div>
   );
 }
