@@ -48,6 +48,10 @@ class Trainee extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.reloadTable(0);
+  }
+
   handleClickOpen = () => {
     this.setState({ open: true }, () => {
     });
@@ -72,14 +76,13 @@ class Trainee extends React.Component {
     });
   }
 
+
   handleChangePage = (event, newpage) => {
-    console.log('inside nandle changepage newPage =', newpage);
-    this.componentDidMount(newpage);
+    this.reloadTable(newpage);
     this.setState({ page: newpage, loading: true });
   }
 
   handleRowsPerPage = (event) => {
-    this.componentDidMount();
     this.setState({ page: 0, rowsPerPage: event.target.value });
   }
 
@@ -99,8 +102,7 @@ class Trainee extends React.Component {
 
   Convert = (email) => email.toUpperCase()
 
-  componentDidMount = (newpage) => {
-    console.log('inside component did mount', newpage);
+  reloadTable = (newpage) => {
     const { rowsPerPage } = this.state;
     const { value } = this.context;
 
@@ -108,7 +110,7 @@ class Trainee extends React.Component {
       'get',
       '/trainee',
       {
-        params: { skip: newpage * rowsPerPage, limit: newpage * rowsPerPage + rowsPerPage },
+        params: { skip: newpage * rowsPerPage, limit: rowsPerPage },
         headers: {
           Authorization: localStorage.get('token'),
         },
@@ -120,7 +122,6 @@ class Trainee extends React.Component {
           value.opensnackbar(message, 'error');
         });
       } else {
-        console.log('response from /trainee', res);
         this.setState({ rowdata: res.data.records, count: res.data.count, loading: false });
       }
     }).catch((error) => {
