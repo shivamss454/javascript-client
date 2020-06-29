@@ -65,10 +65,7 @@ class Trainee extends React.Component {
     } = this.state;
     if (removedialog) {
       this.setState({ removedialog: false });
-      // console.log('inside handle submit page=', page);
-      // console.log('inside handle submit count=', count);
       if (count !== page * rowsPerPage) {
-        // console.log('inside first if');
         this.reloadTable(page);
         if (page !== 0 && count - page * rowsPerPage === 1) {
           this.setState({ page: page - 1 });
@@ -93,7 +90,6 @@ class Trainee extends React.Component {
   }
 
   handleChangePage = (event, newpage) => {
-    // console.log('inside handle changepage newPage =', newpage);
     this.setState({ page: newpage, loading: true });
     this.reloadTable(newpage);
   }
@@ -115,7 +111,7 @@ class Trainee extends React.Component {
     this.setState({ removedialog: true, newData: data });
   }
 
-  Format = (date) => moment(date).format('dddd, MMMM do YYYY, h:mm:ss a')
+  Format = (date) => moment(date).format('dddd, MMMM Do YYYY, h:mm:ss a')
 
   Convert = (email) => email.toUpperCase()
 
@@ -156,6 +152,7 @@ class Trainee extends React.Component {
       open, order, orderBy, page, rowsPerPage, editdialog,
       removedialog, newData, count, rowdata, loading,
     } = this.state;
+    console.log(this.state);
     return (
       <div className={classes.paper}>
         <div className={classes.buttonPosition}>

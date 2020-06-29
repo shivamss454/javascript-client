@@ -17,37 +17,21 @@ function App() {
   return (
     <div>
       <SnackbarProvider>
-        {localStorage.get('token')
-          ? (
-            <BrowserRouter>
-              <Switch>
-                <Route exact path="/">
-                  <Redirect to="/trainee" />
-                </Route>
-                <AuthRoute path="/Login" component={Login} />
-                <PrivateRoute path="/trainee" component={Trainee} />
-                <PrivateRoute path="/text-field-demo" component={TextFieldDemo} />
-                <PrivateRoute path="/input-demo" component={InputDemo} />
-                <PrivateRoute path="/children-demo" component={ChildrenDemo} />
-                <PrivateRoute component={NotFoundRoute} />
-              </Switch>
-            </BrowserRouter>
-          )
-          : (
-            <BrowserRouter>
-              <Switch>
-                <Route exact path="/">
-                  <Redirect to="/Login" />
-                </Route>
-                <AuthRoute path="/Login" component={Login} />
-                <PrivateRoute path="/trainee" component={Trainee} />
-                <PrivateRoute path="/text-field-demo" component={TextFieldDemo} />
-                <PrivateRoute path="/input-demo" component={InputDemo} />
-                <PrivateRoute path="/children-demo" component={ChildrenDemo} />
-                <PrivateRoute component={NotFoundRoute} />
-              </Switch>
-            </BrowserRouter>
-          )}
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/">
+              {localStorage.get('token')
+                ? <Redirect to="/trainee" />
+                : <Redirect to="/Login" />}
+            </Route>
+            <AuthRoute path="/Login" component={Login} />
+            <PrivateRoute path="/trainee" component={Trainee} />
+            <PrivateRoute path="/text-field-demo" component={TextFieldDemo} />
+            <PrivateRoute path="/input-demo" component={InputDemo} />
+            <PrivateRoute path="/children-demo" component={ChildrenDemo} />
+            <PrivateRoute component={NotFoundRoute} />
+          </Switch>
+        </BrowserRouter>
       </SnackbarProvider>
     </div>
   );
