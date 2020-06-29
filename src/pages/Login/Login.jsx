@@ -55,12 +55,16 @@ class Login extends Component {
 
   onClickData = async (data, opensnackbar) => {
     this.setState({ loading: true });
-    await callAPI('post', '/user/login', data);
+    const res = await callAPI('post', '/user/login', data);
     this.setState({ loading: false });
-    if (localstorage.get('token')) {
-      this.setState({ redirect: true });
+    if (res.status === 'ok') {
+      localstorage.set('token', res.data);
+      this.setState({ message: res.message, redirect: true }, () => {
+        const { message } = this.state;
+        opensnackbar(message, 'success');
+      });
     } else {
-      this.setState({ message: 'invalid email and password' }, () => {
+      this.setState({ message: res.message }, () => {
         const { message } = this.state;
         opensnackbar(message, 'error');
       });
