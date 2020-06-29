@@ -2,6 +2,7 @@ import React from 'react';
 import {
   BrowserRouter, Route, Redirect, Switch,
 } from 'react-router-dom';
+import localStorage from 'local-storage';
 import { InputDemo } from './pages/InputDemo';
 import AuthRoute from './Routes/AuthRoute';
 import PrivateRoute from './Routes/PrivateRoute';
@@ -19,7 +20,9 @@ function App() {
         <BrowserRouter>
           <Switch>
             <Route exact path="/">
-              <Redirect to="/trainee" />
+              {localStorage.get('token')
+                ? <Redirect to="/trainee" />
+                : <Redirect to="/Login" />}
             </Route>
             <AuthRoute path="/Login" component={Login} />
             <PrivateRoute path="/trainee" component={Trainee} />

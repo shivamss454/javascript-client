@@ -3,9 +3,14 @@ import PropTypes from 'prop-types';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import MailIcon from '@material-ui/icons/Mail';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import localstorage from 'local-storage';
 import {
   Avatar, withStyles, Button, TextField, Typography, InputAdornment, Container, Box,
 } from '@material-ui/core';
+import { Redirect } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { MyContext } from '../../contexts';
+import callAPI from '../../libs/utils/api';
 import LoginSchema, { useStyles } from '../../configs/constants';
 
 class Login extends Component {
@@ -14,6 +19,9 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
+      message: '',
+      loading: false,
+      redirect: false,
       error: {
         email: '',
         password: '',
@@ -27,6 +35,40 @@ class Login extends Component {
 
   handleData = (data) => (e) => {
     this.setState({ [data]: e.target.value });
+  }
+
+  handleRedirect = () => {
+    const { redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/Trainee" />;
+    }
+    return null;
+  }
+
+  handleReset = () => {
+    this.setState({
+      email: '',
+      password: '',
+      touch: {},
+    });
+  }
+
+  onClickData = async (data, opensnackbar) => {
+    this.setState({ loading: true });
+    const res = await callAPI('post', '/user/login', data);
+    this.setState({ loading: false });
+    if (res.status === 'ok') {
+      localstorage.set('token', res.data);
+      this.setState({ message: res.message, redirect: true }, () => {
+        const { message } = this.state;
+        opensnackbar(message, 'success');
+      });
+    } else {
+      this.setState({ message: res.message }, () => {
+        const { message } = this.state;
+        opensnackbar(message, 'error');
+      });
+    }
   }
 
   getError = (key) => {
@@ -54,86 +96,98 @@ class Login extends Component {
     return false;
   }
 
- isTouched = (val) => {
-   const { touch } = this.state;
-   this.setState({ touch: { ...touch, [val]: true } });
- }
+  isTouched = (val) => {
+    const { touch } = this.state;
+    this.setState({ touch: { ...touch, [val]: true } });
+  }
 
- render() {
-   const { classes } = this.props;
-   const {
-     email, password, error,
-   } = this.state;
-   console.log(this.state);
-   return (
-     <Container component="main" maxwidth="xs">
-       <Box mx="auto" p={2} className={classes.box} boxShadow={3}>
-         <div className={classes.Container}>
-           <Avatar className={classes.avatar}>
-             <LockOutlinedIcon />
-           </Avatar>
-           <Typography component="h1" variant="h5">
+  render() {
+    const { classes } = this.props;
+    const {
+      email, password, error, loading,
+    } = this.state;
+    console.log(this.state);
+    return (
+      <Container component="main" maxwidth="xs">
+        <Box mx="auto" p={2} className={classes.box} boxShadow={3}>
+          <div className={classes.Container}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
               Log in
-           </Typography>
-           <form className={classes.form} noValidate>
-             <TextField
-               id="email"
-               label="Email Address"
-               margin="normal"
-               value={email}
-               required
-               InputProps={{
-                 startAdornment: (
-                   <InputAdornment position="start">
-                     <MailIcon style={{ fontSize: 20 }} />
-                   </InputAdornment>
-                 ),
-               }}
-               variant="outlined"
-               onChange={this.handleData('email')}
-               helperText={this.getError('email')}
-               onBlur={() => { this.isTouched('email'); }}
-               error={error.email}
-               fullWidth
-             />
+            </Typography>
+            <form className={classes.form} noValidate>
+              <TextField
+                id="email"
+                label="Email Address"
+                margin="normal"
+                value={email}
+                required
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <MailIcon style={{ fontSize: 20 }} />
+                    </InputAdornment>
+                  ),
+                }}
+                variant="outlined"
+                onChange={this.handleData('email')}
+                helperText={this.getError('email')}
+                onBlur={() => { this.isTouched('email'); }}
+                error={error.email}
+                fullWidth
+              />
               &nbsp;
-             <TextField
-               id="password"
-               type="password"
-               label="Password"
-               margin="normal"
-               value={password}
-               error={error.password}
-               InputProps={{
-                 startAdornment: (
-                   <InputAdornment position="start">
-                     <VisibilityOffIcon style={{ fontSize: 20 }} />
-                   </InputAdornment>
-                 ),
-               }}
-               variant="outlined"
-               onChange={this.handleData('password')}
-               onBlur={() => { this.isTouched('password'); }}
-               helperText={this.getError('password')}
-               fullWidth
-             />
-             <Button
-               type="submit"
-               fullWidth
-               variant="contained"
-               color="primary"
-               className={classes.submit}
-               disabled={this.hasErrors()}
-             >
-                Sign In
-             </Button>
+              <TextField
+                id="password"
+                type="password"
+                label="Password"
+                margin="normal"
+                value={password}
+                error={error.password}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <VisibilityOffIcon style={{ fontSize: 20 }} />
+                    </InputAdornment>
+                  ),
+                }}
+                variant="outlined"
+                onChange={this.handleData('password')}
+                onBlur={() => { this.isTouched('password'); }}
+                helperText={this.getError('password')}
+                fullWidth
+              />
+              <MyContext.Consumer>
+                {
+                  ({ opensnackbar }) => (
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className={classes.submit}
+                      disabled={this.hasErrors()}
+                      onClick={() => { this.onClickData({ email, password }, opensnackbar); this.handleReset(); }}
+                    >
+                      {loading && (
+                        <CircularProgress size={40} />
+                      )}
+                      {loading && <span>Signing in</span>}
+                      {!loading && <span>Sign in</span>}
+                      {this.handleRedirect()}
+                    </Button>
 
-           </form>
-         </div>
-       </Box>
-     </Container>
-   );
- }
+                  )
+                }
+              </MyContext.Consumer>
+
+            </form>
+          </div>
+        </Box>
+      </Container>
+    );
+  }
 }
 Login.propTypes = {
   classes: PropTypes.func.isRequired,

@@ -1,4 +1,5 @@
 import React from 'react';
+import localStorage from 'local-storage';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -34,7 +35,7 @@ export default function Navbar() {
           <Button component={Link} to="/text-field-demo" color="inherit">Text Field Demo</Button>
           <Button component={Link} to="/input-demo" color="inherit">Input Demo</Button>
           <Button component={Link} to="/children-demo" color="inherit" className={classes.Spacing}>Children Demo</Button>
-          <Button color="inherit">Logout</Button>
+          <Button component={Link} to="/Login" color="inherit" onClick={() => { localStorage.clear('token'); }}>Logout</Button>
         </Toolbar>
       </AppBar>
     </div>
