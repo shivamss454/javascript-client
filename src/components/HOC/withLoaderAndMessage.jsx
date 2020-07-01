@@ -19,6 +19,6 @@ const withLoaderAndMessage = (Wrapper) => (props) => {
     );
   }
   // eslint-disable-next-line react/jsx-props-no-spreading
-  return (<Wrapper loading={loading} count={count} {...rest} />);
+  return (<Wrapper loading={loading} dataLength={count} {...rest} />);
 };
 export default withLoaderAndMessage;

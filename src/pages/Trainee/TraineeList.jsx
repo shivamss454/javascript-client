@@ -9,7 +9,7 @@ import localStorage from 'local-storage';
 import {
   FormDialog, EditDialog, RemoveDialog,
 } from './Components/index';
-import EnhancedTable from './Components/Table/Table';
+import Table from './Components/Table/Table';
 import callAPI from '../../libs/utils/api';
 
 const useStyles = (theme) => ({
@@ -75,7 +75,6 @@ class Trainee extends React.Component {
       order: order === 'asc' ? 'desc' : 'asc',
     });
   }
-
 
   handleChangePage = (event, newpage) => {
     this.reloadTable(newpage);
@@ -161,7 +160,7 @@ class Trainee extends React.Component {
           onSubmit={this.handleSubmit}
           data={newData}
         />
-        <EnhancedTable
+        <Table
           id="table"
           data={rowdata}
           columns={
