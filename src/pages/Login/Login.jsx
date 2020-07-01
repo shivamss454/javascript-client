@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import MailIcon from '@material-ui/icons/Mail';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import localstorage from 'local-storage';
+import localStorage from 'local-storage';
 import {
   Avatar, withStyles, Button, TextField, Typography, InputAdornment, Container, Box,
 } from '@material-ui/core';
@@ -53,21 +53,30 @@ class Login extends Component {
     });
   }
 
-  onClickData = async (data, opensnackbar) => {
+  onClickData = async (Data, opensnackbar) => {
     this.setState({ loading: true });
-    const res = await callAPI('post', '/user/login', data);
+    const res = await callAPI(
+      'post',
+      '/user/login',
+      {
+        data: Data,
+        headers: {
+          Authorization: localStorage.get('token'),
+        },
+      },
+    );
+
+    localStorage.set('token', res.data);
     this.setState({ loading: false });
-    if (res.status === 'ok') {
-      localstorage.set('token', res.data);
-      this.setState({ message: res.message, redirect: true }, () => {
-        const { message } = this.state;
-        opensnackbar(message, 'success');
-      });
-    } else {
-      this.setState({ message: res.message }, () => {
+    const Token = localStorage.get('token');
+
+    if (Token === 'undefined') {
+      this.setState({ message: 'invalid email and password' }, () => {
         const { message } = this.state;
         opensnackbar(message, 'error');
       });
+    } else {
+      this.setState({ redirect: true });
     }
   }
 
@@ -106,7 +115,6 @@ class Login extends Component {
     const {
       email, password, error, loading,
     } = this.state;
-    console.log(this.state);
     return (
       <Container component="main" maxwidth="xs">
         <Box mx="auto" p={2} className={classes.box} boxShadow={3}>
@@ -168,7 +176,10 @@ class Login extends Component {
                       color="primary"
                       className={classes.submit}
                       disabled={this.hasErrors()}
-                      onClick={() => { this.onClickData({ email, password }, opensnackbar); this.handleReset(); }}
+                      onClick={() => {
+                        this.onClickData({ email, password }, opensnackbar);
+                        this.handleReset();
+                      }}
                     >
                       {loading && (
                         <CircularProgress size={40} />

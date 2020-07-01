@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import MailIcon from '@material-ui/icons/Mail';
 import PersonIcon from '@material-ui/icons/Person';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import localStorage from 'local-storage';
 import {
   DialogActions, DialogContent, DialogContentText, Grid, Button, Dialog, DialogTitle, withStyles,
 } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import callAPI from '../../../../libs/utils/api';
 import { MyContext } from '../../../../contexts';
 import HelperTrainee from '../../HelperTrainee';
 import { Schema, useStyles } from '../../../../configs/constants';
@@ -24,6 +27,8 @@ class FormDialog extends Component {
       email: '',
       password: '',
       confirmPassword: '',
+      message: '',
+      loading: false,
       touch: {
         name: false,
         email: false,
@@ -31,6 +36,32 @@ class FormDialog extends Component {
         confirmPassword: false,
       },
     };
+  }
+
+  onClickData = async (data, opensnackbar) => {
+    this.setState({ loading: true });
+    const res = await callAPI(
+      'post',
+      '/trainee',
+      {
+        data,
+        headers: {
+          Authorization: localStorage.get('token'),
+        },
+      },
+    );
+    this.setState({ loading: false });
+    if (res.status === 'ok') {
+      this.setState({ message: res.message }, () => {
+        const { message } = this.state;
+        opensnackbar(message, 'success');
+      });
+    } else {
+      this.setState({ message: 'this is an error message' }, () => {
+        const { message } = this.state;
+        opensnackbar(message, 'error');
+      });
+    }
   }
 
   getError = (key) => {
@@ -75,7 +106,7 @@ class FormDialog extends Component {
       open, onClose, onSubmit, classes,
     } = this.props;
     const {
-      name, email, password,
+      name, email, password, loading,
     } = this.state;
     Object.keys(Obj).forEach((keys) => {
       Result.push(<HelperTrainee
@@ -121,16 +152,18 @@ class FormDialog extends Component {
                 ({ opensnackbar }) => (
                   <Button
                     onClick={() => {
-                      opensnackbar('this is a success message', 'success');
                       onSubmit()({
                         name, email, password,
                       });
+                      this.onClickData({ name, email, password }, opensnackbar);
                     }}
 
                     color="primary"
                     disabled={this.hasErrors()}
                   >
-                    Submit
+                    {loading && (<CircularProgress size={30} />)}
+                    {loading && <span>Submitting</span>}
+                    {!loading && <span> Submit </span>}
                   </Button>
                 )
               }
