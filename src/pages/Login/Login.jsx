@@ -115,7 +115,6 @@ class Login extends Component {
     const {
       email, password, error, loading,
     } = this.state;
-    // console.log(this.state);
     return (
       <Container component="main" maxwidth="xs">
         <Box mx="auto" p={2} className={classes.box} boxShadow={3}>

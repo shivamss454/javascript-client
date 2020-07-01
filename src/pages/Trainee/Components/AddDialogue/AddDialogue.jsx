@@ -51,7 +51,6 @@ class FormDialog extends Component {
       },
     );
     this.setState({ loading: false });
-    console.log('response from CallAPI', res);
     if (res.status === 'ok') {
       this.setState({ message: res.message }, () => {
         const { message } = this.state;

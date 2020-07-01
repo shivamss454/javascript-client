@@ -9,7 +9,7 @@ import localStorage from 'local-storage';
 import {
   FormDialog, EditDialog, RemoveDialog,
 } from './Components/index';
-import EnhancedTable from './Components/Table/Table';
+import Table from './Components/Table/Table';
 import callAPI from '../../libs/utils/api';
 
 const useStyles = (theme) => ({
@@ -46,6 +46,10 @@ class Trainee extends React.Component {
       page: 0,
       rowsPerPage: 20,
     };
+  }
+
+  componentDidMount() {
+    this.reloadTable(0);
   }
 
   handleClickOpen = () => {
@@ -178,7 +182,7 @@ class Trainee extends React.Component {
           onSubmit={this.handleSubmit}
           data={newData}
         />
-        <EnhancedTable
+        <Table
           id="table"
           data={rowdata}
           columns={
