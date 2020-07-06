@@ -59,12 +59,29 @@ class Trainee extends React.Component {
 
   handleClickClose = () => {
     this.setState({ open: false, editdialog: false, removedialog: false }, () => {
+      this.componentDidMount();
     });
   }
 
   handleSubmit = (data) => {
-    this.setState({ open: false, editdialog: false, removedialog: false }, () => {
+    const {
+      page, rowsPerPage, count, removedialog,
+    } = this.state;
+    if (removedialog) {
+      this.setState({ removedialog: false });
+      if (count !== page * rowsPerPage) {
+        this.reloadTable(page);
+        if (page !== 0 && count - page * rowsPerPage === 1) {
+          this.setState({ page: page - 1 });
+          this.reloadTable(page);
+        }
+      }
+    }
+    this.setState({
+      open: false, editdialog: false, loading: true,
+    }, () => {
       console.log(data);
+      this.reloadTable(page);
     });
   }
 
@@ -77,12 +94,13 @@ class Trainee extends React.Component {
   }
 
   handleChangePage = (event, newpage) => {
-    this.reloadTable(newpage);
     this.setState({ page: newpage, loading: true });
+    this.reloadTable(newpage);
   }
 
   handleRowsPerPage = (event) => {
-    this.setState({ page: 0, rowsPerPage: event.target.value });
+    this.setState({ page: 0, rowsPerPage: event.target.value }, () => {
+    });
   }
 
   handleSelect = (event, data) => {
@@ -103,7 +121,7 @@ class Trainee extends React.Component {
 
   reloadTable = (newpage) => {
     const { rowsPerPage } = this.state;
-    const { value } = this.context;
+    const value = this.context;
 
     callAPI(
       'get',
@@ -126,6 +144,10 @@ class Trainee extends React.Component {
     }).catch((error) => {
       console.log(error.message);
     });
+  }
+
+  componentDidMount = () => {
+    this.reloadTable(0);
   }
 
   render() {
@@ -187,10 +209,12 @@ class Trainee extends React.Component {
             {
               icon: <EditIcon />,
               handler: this.handleEditDialogOpen,
+              label: 'edit icon',
             },
             {
               icon: <DeleteIcon />,
               handler: this.handleRemoveDialogOpen,
+              label: 'delete icon',
             },
           ]}
           orderBy={orderBy}

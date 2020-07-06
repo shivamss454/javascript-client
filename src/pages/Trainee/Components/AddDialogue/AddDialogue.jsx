@@ -57,7 +57,7 @@ class FormDialog extends Component {
         opensnackbar(message, 'success');
       });
     } else {
-      this.setState({ message: 'this is an error message' }, () => {
+      this.setState({ message: 'this is an Error Message' }, () => {
         const { message } = this.state;
         opensnackbar(message, 'error');
       });

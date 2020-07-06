@@ -6,8 +6,11 @@ import {
   DialogActions, DialogContent, DialogContentText, InputAdornment,
   TextField, Grid, Button, Dialog, DialogTitle, withStyles,
 } from '@material-ui/core';
+import localStorage from 'local-storage';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { MyContext } from '../../../../contexts';
 import { useStyles } from '../../../../configs/constants';
+import callAPI from '../../../../libs/utils/api';
 
 class EditDialog extends Component {
   constructor(props) {
@@ -15,6 +18,8 @@ class EditDialog extends Component {
     this.state = {
       name: '',
       email: '',
+      loading: false,
+      message: '',
       isValid: false,
       touch: {},
     };
@@ -55,12 +60,44 @@ class EditDialog extends Component {
     });
   };
 
+  onClickData = (data, opensnackbar) => {
+    const { onSubmit } = this.props;
+    this.setState({ loading: true });
+    callAPI(
+      'put',
+      '/trainee',
+      {
+        data,
+        headers: {
+          Authorization: localStorage.get('token'),
+        },
+      },
+    )
+      .then((response) => {
+        if (response.status === 'ok') {
+          this.setState({ loading: false, message: response.message }, () => {
+            onSubmit(response.data.id);
+            const { message } = this.state;
+            opensnackbar(message, 'success');
+          });
+        } else {
+          this.setState({ loading: false, message: 'this is an Error Message' }, () => {
+            const { message } = this.state;
+            opensnackbar(message, 'error');
+          });
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+  }
+
   render() {
     const {
-      open, onClose, onSubmit, classes, data,
+      open, onClose, classes, data,
     } = this.props;
+    const { originalId: id } = data;
     const {
-      name, email, isValid,
+      name, email, isValid, loading,
     } = this.state;
     return (
       <div>
@@ -119,13 +156,14 @@ class EditDialog extends Component {
                   <Button
                     disabled={!isValid}
                     onClick={() => {
-                      opensnackbar('this is a success message', 'success');
-                      onSubmit({ name, email });
+                      this.onClickData({ name, email, id }, opensnackbar);
                       this.formReset();
                     }}
                     color="primary"
                   >
-                    Submit
+                    {loading && <CircularProgress size={30} />}
+                    {loading && <span>Submitting</span>}
+                    {!loading && <span> Submit</span>}
                   </Button>
                 )
               }

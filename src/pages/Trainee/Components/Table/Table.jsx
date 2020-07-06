@@ -70,9 +70,9 @@ export function SimpleTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          { dataLength ? (
+          {data.length ? (
             <>
-              { data.map((ele) => (
+              {data.map((ele) => (
                 <StyledTableRow hover key={ele[id]}>
                   {
                     columns && columns.length && columns.map(({ field, align, format }) => (
